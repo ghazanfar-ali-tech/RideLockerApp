@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'alert_tab.dart';
 
-void main() {
-  runApp(const RideLockrApp());
-}
 
 class RideLockrApp extends StatelessWidget {
   const RideLockrApp({super.key});
