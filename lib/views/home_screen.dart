@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'providers/home_provider.dart';
-import 'widgets/stat_card.dart';
-import 'widgets/action_box.dart';
-import 'widgets/alert_row.dart';
-import 'widgets/nav_item.dart';
+import '../providers/home_provider.dart';
+import '../widgets/stat_card.dart';
+import '../widgets/action_box.dart';
+import '../widgets/alert_row.dart';
+import '../widgets/nav_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -53,7 +53,9 @@ class HomeScreen extends StatelessWidget {
           child: SizedBox(
             height: 66,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding * 0.85),
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding * 0.85,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -98,9 +100,18 @@ class HomeScreen extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Good Morning, Ahmed 👋', style: TextStyle(color: Colors.white70)),
+            const Text(
+              'Good Morning, Ahmed 👋',
+              style: TextStyle(color: Colors.white70),
+            ),
             SizedBox(height: 4),
-            Text('YOUR GARAGE', style: TextStyle(fontSize: titleSize, fontWeight: FontWeight.bold)),
+            Text(
+              'YOUR GARAGE',
+              style: TextStyle(
+                fontSize: titleSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
         CircleAvatar(
@@ -128,18 +139,30 @@ class HomeScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text('YAMAHA YBR 125G', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Text(
+                    'YAMAHA YBR 125G',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
                   SizedBox(height: 6),
                   Text('LHR-4821', style: TextStyle(color: Colors.white70)),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFF062B11),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text('LOCKED', style: TextStyle(color: Color(0xFF00E676), fontWeight: FontWeight.bold)),
+                child: const Text(
+                  'LOCKED',
+                  style: TextStyle(
+                    color: Color(0xFF00E676),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
@@ -155,7 +178,14 @@ class HomeScreen extends StatelessWidget {
                   color: Colors.white10,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Align(alignment: Alignment.centerLeft, child: Container(width: 40, height: 12, color: const Color(0xFF00E676))),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 40,
+                    height: 12,
+                    color: const Color(0xFF00E676),
+                  ),
+                ),
               ),
             ),
           ),
@@ -199,14 +229,25 @@ class HomeScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
-            Text('RECENT ALERTS', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              'RECENT ALERTS',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             Text('View all →', style: TextStyle(color: Colors.greenAccent)),
           ],
         ),
         const SizedBox(height: 8),
-        const AlertRow(color: Colors.redAccent, text: 'Motion detected near bike', time: '2m ago'),
+        const AlertRow(
+          color: Colors.redAccent,
+          text: 'Motion detected near bike',
+          time: '2m ago',
+        ),
         const SizedBox(height: 8),
-        const AlertRow(color: Colors.orangeAccent, text: 'Left Geo-fence boundary', time: '1h ago'),
+        const AlertRow(
+          color: Colors.orangeAccent,
+          text: 'Left Geo-fence boundary',
+          time: '1h ago',
+        ),
       ],
     );
   }

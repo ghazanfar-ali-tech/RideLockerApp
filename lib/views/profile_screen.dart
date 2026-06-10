@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_locker_app/app_preferences_screen.dart';
-import 'package:ride_locker_app/edit_profile_screen.dart';
-import 'package:ride_locker_app/helpsupport_screen.dart';
-import 'package:ride_locker_app/subscription_screen.dart';
+import 'package:ride_locker_app/views/app_preferences_screen.dart';
+import 'package:ride_locker_app/views/edit_profile_screen.dart';
+import 'package:ride_locker_app/views/helpsupport_screen.dart';
+import 'package:ride_locker_app/views/subscription_screen.dart';
 
 class BikeProvider with ChangeNotifier {
   final List<Map<String, dynamic>> bikes = [

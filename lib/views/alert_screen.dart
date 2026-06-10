@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'model.dart';
-import 'notification_provider.dart';
+import '../models/model.dart';
+import '../providers/notification_provider.dart';
 
 // RideLockrApp moved here to keep main.dart minimal
 class RideLockrApp extends StatelessWidget {
@@ -32,7 +32,8 @@ class AlertScreen extends StatefulWidget {
   State<AlertScreen> createState() => _AlertScreenState();
 }
 
-class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStateMixin {
+class _AlertScreenState extends State<AlertScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tc;
 
   @override
@@ -55,23 +56,38 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
     return '${diff.inDays} days ago';
   }
 
-  void _showDetails(BuildContext context, NotificationItem n, NotificationProvider provider) {
+  void _showDetails(
+    BuildContext context,
+    NotificationItem n,
+    NotificationProvider provider,
+  ) {
     if (!n.isRead) provider.markRead(n.id);
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF1E1E1E),
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       builder: (_) => Container(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(n.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            Text(
+              n.title,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 12),
-            Text(n.description, style: const TextStyle(fontSize: 16, color: Colors.white70)),
+            Text(
+              n.description,
+              style: const TextStyle(fontSize: 16, color: Colors.white70),
+            ),
             const SizedBox(height: 12),
-            Text(_timeAgo(n.timestamp), style: const TextStyle(color: Colors.grey)),
+            Text(
+              _timeAgo(n.timestamp),
+              style: const TextStyle(color: Colors.grey),
+            ),
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
@@ -80,7 +96,9 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF00FFAA),
                   foregroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
                 child: const Text('OK'),
               ),
@@ -98,7 +116,10 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notifications', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Notifications',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
         bottom: TabBar(
           controller: _tc,
           indicatorColor: const Color(0xFF00FFAA),
@@ -110,7 +131,9 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
             Tab(text: 'Geo-fence'),
             Tab(text: 'System'),
           ],
-          onTap: (_) => setState(() {}), // only rebuilds UI for tab change, no data mutation
+          onTap: (_) => setState(
+            () {},
+          ), // only rebuilds UI for tab change, no data mutation
         ),
       ),
       body: Column(
@@ -123,17 +146,37 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
                 GestureDetector(
                   onTap: provider.toggleUnread,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
-                      color: provider.unreadOnly ? const Color(0xFF00FFAA).withOpacity(0.2) : Colors.transparent,
-                      border: Border.all(color: const Color(0xFF00FFAA), width: 1.2),
+                      color: provider.unreadOnly
+                          ? const Color(0xFF00FFAA).withOpacity(0.2)
+                          : Colors.transparent,
+                      border: Border.all(
+                        color: const Color(0xFF00FFAA),
+                        width: 1.2,
+                      ),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Row(
                       children: [
-                        Icon(provider.unreadOnly ? Icons.check_circle : Icons.circle_outlined, size: 18, color: const Color(0xFF00FFAA)),
+                        Icon(
+                          provider.unreadOnly
+                              ? Icons.check_circle
+                              : Icons.circle_outlined,
+                          size: 18,
+                          color: const Color(0xFF00FFAA),
+                        ),
                         const SizedBox(width: 8),
-                        const Text('Unread', style: TextStyle(color: Color(0xFF00FFAA), fontSize: 14)),
+                        const Text(
+                          'Unread',
+                          style: TextStyle(
+                            color: Color(0xFF00FFAA),
+                            fontSize: 14,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -150,16 +193,32 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
                     );
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFF00D4FF), width: 1.2),
+                      border: Border.all(
+                        color: const Color(0xFF00D4FF),
+                        width: 1.2,
+                      ),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: const Row(
                       children: [
-                        Icon(Icons.clear_all, size: 18, color: Color(0xFF00D4FF)),
+                        Icon(
+                          Icons.clear_all,
+                          size: 18,
+                          color: Color(0xFF00D4FF),
+                        ),
                         SizedBox(width: 8),
-                        Text('Clear All', style: TextStyle(color: Color(0xFF00D4FF), fontSize: 14)),
+                        Text(
+                          'Clear All',
+                          style: TextStyle(
+                            color: Color(0xFF00D4FF),
+                            fontSize: 14,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -173,16 +232,24 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.notifications_off, size: 80, color: Colors.grey),
+                        Icon(
+                          Icons.notifications_off,
+                          size: 80,
+                          color: Colors.grey,
+                        ),
                         SizedBox(height: 16),
-                        Text('No notifications', style: TextStyle(color: Colors.white54)),
+                        Text(
+                          'No notifications',
+                          style: TextStyle(color: Colors.white54),
+                        ),
                       ],
                     ),
                   )
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: filteredItems.length,
-                    itemBuilder: (_, i) => _buildCard(context, filteredItems[i], provider),
+                    itemBuilder: (_, i) =>
+                        _buildCard(context, filteredItems[i], provider),
                   ),
           ),
         ],
@@ -204,7 +271,11 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
     );
   }
 
-  Widget _buildCard(BuildContext context, NotificationItem n, NotificationProvider provider) {
+  Widget _buildCard(
+    BuildContext context,
+    NotificationItem n,
+    NotificationProvider provider,
+  ) {
     late IconData icon;
     late Color color;
     switch (n.category) {
@@ -241,11 +312,19 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
         decoration: BoxDecoration(
           color: const Color(0xFF1E1E1E),
           borderRadius: BorderRadius.circular(16),
-          border: !n.isRead ? Border.all(color: const Color(0xFF00FFAA).withOpacity(0.7), width: 1.2) : null,
+          border: !n.isRead
+              ? Border.all(
+                  color: const Color(0xFF00FFAA).withOpacity(0.7),
+                  width: 1.2,
+                )
+              : null,
         ),
         child: ListTile(
           onTap: () => _showDetails(context, n, provider),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
           leading: Container(
             width: 48,
             height: 48,
@@ -264,14 +343,21 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
               Expanded(
                 child: Text(
                   n.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 16),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                    fontSize: 16,
+                  ),
                 ),
               ),
               if (!n.isRead)
                 Container(
                   width: 10,
                   height: 10,
-                  decoration: const BoxDecoration(color: Color(0xFF00FFAA), shape: BoxShape.circle),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF00FFAA),
+                    shape: BoxShape.circle,
+                  ),
                 ),
             ],
           ),
@@ -279,14 +365,24 @@ class _AlertScreenState extends State<AlertScreen> with SingleTickerProviderStat
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 6),
-              Text(n.description, style: const TextStyle(color: Colors.white70, fontSize: 14)),
+              Text(
+                n.description,
+                style: const TextStyle(color: Colors.white70, fontSize: 14),
+              ),
               const SizedBox(height: 6),
-              Text(_timeAgo(n.timestamp), style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              Text(
+                _timeAgo(n.timestamp),
+                style: const TextStyle(color: Colors.grey, fontSize: 12),
+              ),
             ],
           ),
           trailing: !n.isRead
               ? IconButton(
-                  icon: const Icon(Icons.check_circle_outline, color: Color(0xFF00FFAA), size: 22),
+                  icon: const Icon(
+                    Icons.check_circle_outline,
+                    color: Color(0xFF00FFAA),
+                    size: 22,
+                  ),
                   onPressed: () => provider.markRead(n.id),
                 )
               : null,
