@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:ride_locker_app/views/login_screen.dart';
 import 'home_screen.dart';
 import 'providers/home_provider.dart';
+import 'alert_screen.dart';
+import 'notification_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +12,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
         // add more providers here
       ],
       child: const MyApp(),
