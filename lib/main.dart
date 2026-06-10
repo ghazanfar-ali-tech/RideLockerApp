@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ride_locker_app/views/login_screen.dart';
-import 'package:ride_locker_app/profile_screen.dart';
-import 'home_screen.dart';
+import 'package:ride_locker_app/views/profile_screen.dart';
 import 'providers/home_provider.dart';
-import 'alert_screen.dart';
-import 'notification_provider.dart';
+import 'providers/notification_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
