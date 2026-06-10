@@ -5,7 +5,7 @@ class NavItem extends StatelessWidget {
   final IconData icon;
   final bool active;
   final VoidCallback onTap;
-  const NavItem({required this.label, required this.icon, required this.onTap, this.active = false});
+  const NavItem({super.key, required this.label, required this.icon, required this.onTap, this.active = false});
 
   @override
   Widget build(BuildContext context) {

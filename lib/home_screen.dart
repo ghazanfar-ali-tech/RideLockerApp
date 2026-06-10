@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/home_provider.dart';
 import 'widgets/stat_card.dart';
 import 'widgets/action_box.dart';
 import 'widgets/alert_row.dart';
 import 'widgets/nav_item.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-
-  @override
   Widget build(BuildContext context) {
+    final selectedIndex = context.watch<HomeProvider>().selectedIndex;
+    final homeProvider = context.read<HomeProvider>();
     final size = MediaQuery.of(context).size;
     final horizontalPadding = size.width * 0.04;
     final verticalGap = size.height * 0.014;
@@ -44,11 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _selectedIndex = 0;
-          });
-        },
+        onPressed: homeProvider.resetToHome,
         child: const Icon(Icons.lock),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -67,27 +60,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   NavItem(
                     label: 'Home',
                     icon: Icons.home,
-                    active: _selectedIndex == 0,
-                    onTap: () => setState(() => _selectedIndex = 0),
+                    active: selectedIndex == 0,
+                    onTap: () => homeProvider.setSelectedIndex(0),
                   ),
                   NavItem(
                     label: 'Track',
                     icon: Icons.location_on,
-                    active: _selectedIndex == 1,
-                    onTap: () => setState(() => _selectedIndex = 1),
+                    active: selectedIndex == 1,
+                    onTap: () => homeProvider.setSelectedIndex(1),
                   ),
                   SizedBox(width: size.width * 0.13),
                   NavItem(
                     label: 'Alert',
                     icon: Icons.notifications,
-                    active: _selectedIndex == 2,
-                    onTap: () => setState(() => _selectedIndex = 2),
+                    active: selectedIndex == 2,
+                    onTap: () => homeProvider.setSelectedIndex(2),
                   ),
                   NavItem(
                     label: 'Profile',
                     icon: Icons.person,
-                    active: _selectedIndex == 3,
-                    onTap: () => setState(() => _selectedIndex = 3),
+                    active: selectedIndex == 3,
+                    onTap: () => homeProvider.setSelectedIndex(3),
                   ),
                 ],
               ),

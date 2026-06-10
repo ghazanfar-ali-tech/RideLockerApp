@@ -4,7 +4,7 @@ class AlertRow extends StatelessWidget {
   final Color color;
   final String text;
   final String time;
-  const AlertRow({required this.color, required this.text, required this.time});
+  const AlertRow({super.key, required this.color, required this.text, required this.time});
 
   @override
   Widget build(BuildContext context) {

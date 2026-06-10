@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ActionBox extends StatelessWidget {
   final IconData icon;
   final String label;
-  const ActionBox({required this.icon, required this.label});
+  const ActionBox({super.key, required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {
