@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_locker_app/views/auth_screens/login_screen.dart';
+import 'package:ride_locker_app/on_borading_screens/on_boarding_first_view.dart';
 import 'package:ride_locker_app/views/profile_screen.dart';
+import 'package:ride_locker_app/views/splash_screen/splash_screen.dart';
 import 'providers/home_provider.dart';
 import 'providers/notification_provider.dart';
 
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      home: const LoginScreen(),
+      home: OnboardingFirstView(),
     );
   }
 }
