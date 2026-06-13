@@ -9,14 +9,15 @@ import 'package:ride_locker_app/providers/auth_providers/login_provider.dart';
 import 'package:ride_locker_app/providers/auth_providers/signup_provider.dart';
 import 'package:ride_locker_app/providers/on_boarding_provider.dart';
 
-import 'package:ride_locker_app/views/on_borading_screens/on_boarding_screen.dart';
-import 'package:ride_locker_app/views/profile_screen.dart';
-import 'package:ride_locker_app/views/splash_screen/splash_screen.dart';
-
 import 'providers/home_provider.dart';
 import 'providers/notification_provider.dart';
+import 'package:ride_locker_app/routes/app_routes.dart';
+import 'package:ride_locker_app/views/profile_screen.dart';
 
 void main() async {
+  // google-services.json
+  // lib/constants.dart
+
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -60,7 +61,8 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
           ),
         ),
-        home: SplashScreen(),
+        initialRoute: AppRoutes.splash,
+        onGenerateRoute: AppRoutes.generateRoute,
       ),
     );
   }

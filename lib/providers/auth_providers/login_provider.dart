@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ride_locker_app/comonents/utils.dart';
 import 'package:ride_locker_app/services/auth_services.dart';
 import 'package:ride_locker_app/views/auth_screens/components/login_successful_dashboard.dart';
+import 'package:ride_locker_app/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginProvider extends ChangeNotifier {
@@ -98,9 +99,9 @@ class LoginProvider extends ChangeNotifier {
 
       if (context.mounted) {
         // Navigator.pushNamed(context, AppRoutes.home);
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(builder: (_) => LoginSuccessfulDashboard()),
+          AppRoutes.loginSuccessfulDashboard,
         );
       }
     } on FirebaseAuthException catch (e) {
