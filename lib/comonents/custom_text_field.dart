@@ -9,6 +9,7 @@ Widget customTextFormField({
   String? errorText,
   TextEditingController? controller,
   TextInputType keyboardType = TextInputType.text,
+  final String? Function(String?)? validator,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,10 +29,14 @@ Widget customTextFormField({
           obscureText: obscureText,
           keyboardType: keyboardType,
           style: const TextStyle(color: Colors.white, fontSize: 14),
+          validator: validator,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14),
             prefixIcon: Icon(prefixIcon, color: Colors.grey.shade600, size: 20),
+            errorBorder: InputBorder.none,
+            focusedErrorBorder: InputBorder.none,
+            border: InputBorder.none,
             suffixIcon: suffixIcon != null
                 ? GestureDetector(
                     onTap: onSuffixTap,
@@ -42,7 +47,7 @@ Widget customTextFormField({
                     ),
                   )
                 : null,
-            border: InputBorder.none,
+
             contentPadding: const EdgeInsets.symmetric(vertical: 16),
           ),
         ),
