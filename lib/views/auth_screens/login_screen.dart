@@ -6,6 +6,7 @@ import 'package:ride_locker_app/providers/auth_providers/login_provider.dart';
 import 'package:ride_locker_app/views/auth_screens/components/form_heading_text.dart';
 import 'package:ride_locker_app/views/auth_screens/forgot_password_screen.dart';
 import 'package:ride_locker_app/views/auth_screens/signup_screen.dart';
+import 'package:ride_locker_app/routes/app_routes.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -123,12 +124,9 @@ class LoginScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
+                                Navigator.pushNamed(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ForgotPasswordScreen(),
-                                  ),
+                                  AppRoutes.forgotPassword,
                                 );
                               },
                               child: Text(
@@ -166,11 +164,9 @@ class LoginScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
+                                Navigator.pushNamed(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (_) => SignupScreen(),
-                                  ),
+                                  AppRoutes.signup,
                                 );
                               },
                               child: Text(

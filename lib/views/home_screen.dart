@@ -6,6 +6,7 @@ import '../widgets/stat_card.dart';
 import '../widgets/action_box.dart';
 import '../widgets/alert_row.dart';
 import '../widgets/nav_item.dart';
+import '../routes/app_routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -77,16 +78,24 @@ class HomeScreen extends StatelessWidget {
                     label: 'Alert',
                     icon: Icons.notifications,
                     active: selectedIndex == 2,
-                    onTap: () => homeProvider.setSelectedIndex(2),
+                    onTap: () {
+                      homeProvider.setSelectedIndex(2);
+                      Navigator.pushNamed(context, AppRoutes.alerts).then((_) {
+                        homeProvider.resetToHome();
+                      });
+                    },
                   ),
                   NavItem(
                     label: 'Profile',
                     icon: Icons.person,
                     active: selectedIndex == 3,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ProfileScreen()),
-                    ),
+
+                    onTap: () {
+                      homeProvider.setSelectedIndex(3);
+                      Navigator.pushNamed(context, AppRoutes.profile).then((_) {
+                        homeProvider.resetToHome();
+                      });
+                    },
                   ),
                 ],
               ),

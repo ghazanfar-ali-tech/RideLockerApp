@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ride_locker_app/core/app_colors.dart';
-import 'package:ride_locker_app/views/auth_screens/login_screen.dart';
-import 'package:ride_locker_app/views/home_screen.dart';
-import 'package:ride_locker_app/views/on_borading_screens/on_boarding_screen.dart';
+import 'package:ride_locker_app/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,20 +27,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (!mounted) return;
 
-    Widget destination;
+    String destination;
 
     if (!onboardingDone) {
-      destination = const OnboardingScreen();
+      destination = AppRoutes.onboarding;
     } else if (isLoggedIn) {
-      destination = HomeScreen();
+      destination = AppRoutes.home;
     } else {
-      destination = LoginScreen();
+      destination = AppRoutes.login;
     }
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => destination),
-    );
+    Navigator.pushReplacementNamed(context, destination);
   }
 
   @override

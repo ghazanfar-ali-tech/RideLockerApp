@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ride_locker_app/views/auth_screens/login_screen.dart';
+import 'package:ride_locker_app/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingProvider extends ChangeNotifier {
@@ -56,9 +57,9 @@ class OnboardingProvider extends ChangeNotifier {
     await prefs.setBool('onboarding_done', true);
 
     if (context.mounted) {
-      Navigator.pushReplacement(
+      Navigator.pushReplacementNamed(
         context,
-        MaterialPageRoute(builder: (_) => LoginScreen()),
+        AppRoutes.login,
       );
     }
   }
