@@ -3,20 +3,26 @@ import 'package:flutter/material.dart';
 class ActionBox extends StatelessWidget {
   final IconData icon;
   final String label;
+
   const ActionBox({super.key, required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: 72,
-        decoration: BoxDecoration(color: const Color(0xFF141516), borderRadius: BorderRadius.circular(10)),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        decoration: BoxDecoration(
+          color: const Color(0xFF131418),
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.greenAccent, size: 28),
-            const SizedBox(height: 6),
-            Text(label, style: const TextStyle(color: Colors.white70, fontSize: 12)),
+            Icon(icon, color: const Color(0xFF00E676), size: 28),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: const TextStyle(color: Colors.white70, fontSize: 12),
+            ),
           ],
         ),
       ),
