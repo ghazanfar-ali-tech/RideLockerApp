@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ride_locker_app/comonents/utils.dart';
+import 'package:ride_locker_app/components/utils.dart';
 import 'package:ride_locker_app/services/auth_services.dart';
 import 'package:ride_locker_app/views/auth_screens/components/login_successful_dashboard.dart';
-import 'package:ride_locker_app/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginProvider extends ChangeNotifier {
@@ -99,9 +98,9 @@ class LoginProvider extends ChangeNotifier {
 
       if (context.mounted) {
         // Navigator.pushNamed(context, AppRoutes.home);
-        Navigator.pushNamed(
+        Navigator.push(
           context,
-          AppRoutes.loginSuccessfulDashboard,
+          MaterialPageRoute(builder: (_) => LoginSuccessfulDashboard()),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -123,6 +122,21 @@ class LoginProvider extends ChangeNotifier {
     } finally {
       _isloading = false;
       notifyListeners();
+    }
+  }
+
+  Future<void> logout(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', false);
+
+      if (context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+      }
+    } catch (e) {
+      Utils.errorToast('Logout failed: $e');
     }
   }
 

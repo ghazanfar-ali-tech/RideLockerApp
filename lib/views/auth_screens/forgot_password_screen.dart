@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_locker_app/comonents/custom_text_field.dart';
-import 'package:ride_locker_app/comonents/round_button.dart';
+import 'package:ride_locker_app/components/custom_text_field.dart';
+import 'package:ride_locker_app/components/round_button.dart';
 import 'package:ride_locker_app/core/app_colors.dart';
 import 'package:ride_locker_app/providers/auth_providers/forgot_password_provider.dart';
 import 'package:ride_locker_app/views/auth_screens/components/form_heading_text.dart';

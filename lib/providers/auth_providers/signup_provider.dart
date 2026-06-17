@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ride_locker_app/comonents/utils.dart';
+import 'package:ride_locker_app/components/utils.dart';
 import 'package:ride_locker_app/views/auth_screens/components/account_creation_dashboard.dart';
-import 'package:ride_locker_app/routes/app_routes.dart';
 import 'package:ride_locker_app/services/auth_services.dart';
 
 class SignupProvider extends ChangeNotifier {
@@ -105,9 +104,9 @@ class SignupProvider extends ChangeNotifier {
       phoneNumberController.clear();
 
       if (context.mounted) {
-        Navigator.pushReplacementNamed(
+        Navigator.pushReplacement(
           context,
-          AppRoutes.accountCreationDashboard,
+          MaterialPageRoute(builder: (_) => const AccountCreationDashboard()),
         );
       }
     } on FirebaseAuthException catch (e) {

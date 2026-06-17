@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
+import 'package:ride_locker_app/providers/auth_providers/login_provider.dart';
 
 class AppPreferencesScreen extends StatefulWidget {
   const AppPreferencesScreen({super.key});
@@ -259,7 +262,10 @@ class _AppPreferencesScreenState extends State<AppPreferencesScreen> {
                   title: "Log Out",
                   message: "Are you sure you want to log out?",
                   onConfirm: () {
-                    Navigator.pop(context);
+                    Provider.of<LoginProvider>(
+                      context,
+                      listen: false,
+                    ).logout(context);
                   },
                 );
               },

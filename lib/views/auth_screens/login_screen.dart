@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_locker_app/comonents/custom_text_field.dart';
-import 'package:ride_locker_app/comonents/round_button.dart';
+import 'package:ride_locker_app/components/custom_text_field.dart';
+import 'package:ride_locker_app/components/round_button.dart';
 import 'package:ride_locker_app/providers/auth_providers/login_provider.dart';
 import 'package:ride_locker_app/views/auth_screens/components/form_heading_text.dart';
 import 'package:ride_locker_app/views/auth_screens/forgot_password_screen.dart';
 import 'package:ride_locker_app/views/auth_screens/signup_screen.dart';
-import 'package:ride_locker_app/routes/app_routes.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -124,9 +123,12 @@ class LoginScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
+                                Navigator.push(
                                   context,
-                                  AppRoutes.forgotPassword,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ForgotPasswordScreen(),
+                                  ),
                                 );
                               },
                               child: Text(
@@ -164,9 +166,11 @@ class LoginScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
+                                Navigator.push(
                                   context,
-                                  AppRoutes.signup,
+                                  MaterialPageRoute(
+                                    builder: (_) => SignupScreen(),
+                                  ),
                                 );
                               },
                               child: Text(

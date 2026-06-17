@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-<<<<<<< HEAD
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'edit_profile_screen.dart';
-import 'app_preferences_screen.dart';
-import 'helpsupport_screen.dart';
-import 'subscription_screen.dart';
-=======
 import 'package:ride_locker_app/views/app_preferences_screen.dart';
 import 'package:ride_locker_app/views/edit_profile_screen.dart';
 import 'package:ride_locker_app/views/helpsupport_screen.dart';
 import 'package:ride_locker_app/views/subscription_screen.dart';
 import 'package:ride_locker_app/routes/app_routes.dart';
->>>>>>> origin/hamza_wasiq
 
 class BikeProvider with ChangeNotifier {
   final List<Map<String, dynamic>> bikes = [
@@ -150,10 +142,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      AppRoutes.editProfile,
-                    );
+                    Navigator.pushNamed(context, AppRoutes.editProfile);
                   },
                   child: const Text(
                     "Edit Profile",
@@ -289,10 +278,7 @@ class ProfileScreen extends StatelessWidget {
                 Icons.settings,
                 "App Preferences",
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    AppRoutes.appPreferences,
-                  );
+                  Navigator.pushNamed(context, AppRoutes.appPreferences);
                 },
               ),
 
@@ -300,10 +286,7 @@ class ProfileScreen extends StatelessWidget {
                 Icons.help_outline,
                 "Help & Support",
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    AppRoutes.helpSupport,
-                  );
+                  Navigator.pushNamed(context, AppRoutes.helpSupport);
                 },
               ),
 
@@ -311,10 +294,7 @@ class ProfileScreen extends StatelessWidget {
                 Icons.subscriptions,
                 "Subscriptions",
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    AppRoutes.subscription,
-                  );
+                  Navigator.pushNamed(context, AppRoutes.subscription);
                 },
               ),
 

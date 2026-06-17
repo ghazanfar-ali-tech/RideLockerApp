@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ride_locker_app/comonents/round_button.dart';
+import 'package:ride_locker_app/components/round_button.dart';
 import 'package:ride_locker_app/core/app_colors.dart';
 import 'package:ride_locker_app/views/home_screen.dart';
-import 'package:ride_locker_app/routes/app_routes.dart';
 
 class AccountCreationDashboard extends StatelessWidget {
   const AccountCreationDashboard({super.key});
@@ -99,9 +98,9 @@ class AccountCreationDashboard extends StatelessWidget {
                       RoundedButton(
                         text: 'Continue to Dashboard',
                         onTap: () {
-                          Navigator.pushNamedAndRemoveUntil(
+                          Navigator.pushAndRemoveUntil(
                             context,
-                            AppRoutes.home,
+                            MaterialPageRoute(builder: (_) => HomeScreen()),
                             (route) => false,
                           );
                         },

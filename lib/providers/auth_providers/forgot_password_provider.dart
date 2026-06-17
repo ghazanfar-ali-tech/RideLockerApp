@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ride_locker_app/comonents/utils.dart';
+import 'package:ride_locker_app/components/utils.dart';
 
 class ForgotPasswordProvider extends ChangeNotifier {
   final TextEditingController _emailController = TextEditingController();
