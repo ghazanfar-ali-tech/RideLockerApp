@@ -5,21 +5,37 @@ class NavItem extends StatelessWidget {
   final IconData icon;
   final bool active;
   final VoidCallback onTap;
-  const NavItem({super.key, required this.label, required this.icon, required this.onTap, this.active = false});
+
+  const NavItem({
+    super.key,
+    required this.label,
+    required this.icon,
+    required this.active,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    final color = active ? const Color(0xFF00E676) : Colors.white38;
+
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        width: 60,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: active ? Colors.greenAccent : Colors.white54, size: 24),
-            const SizedBox(height: 2),
-            Text(label, style: TextStyle(color: active ? Colors.greenAccent : Colors.white54, fontSize: 11)),
+            Icon(icon, color: color, size: 22),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                color: color,
+                fontSize: 11,
+                fontWeight: active ? FontWeight.w600 : FontWeight.normal,
+              ),
+            ),
           ],
         ),
       ),
