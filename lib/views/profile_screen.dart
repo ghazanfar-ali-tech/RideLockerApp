@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_locker_app/views/app_preferences_screen.dart';
-import 'package:ride_locker_app/views/edit_profile_screen.dart';
-import 'package:ride_locker_app/views/helpsupport_screen.dart';
-import 'package:ride_locker_app/views/subscription_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'edit_profile_screen.dart';
+import 'app_preferences_screen.dart';
+import 'helpsupport_screen.dart';
+import 'subscription_screen.dart';
 
 class BikeProvider with ChangeNotifier {
   final List<Map<String, dynamic>> bikes = [
@@ -27,6 +30,11 @@ class BikeProvider with ChangeNotifier {
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getUserStream() {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    return FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bikeProvider = Provider.of<BikeProvider>(context);
@@ -44,59 +52,85 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const SizedBox(height: 10),
-
-              const CircleAvatar(
-                radius: 55,
-                backgroundImage: NetworkImage(
-                  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-                ),
-              ),
-
-              const SizedBox(height: 15),
-
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Text(
-                  "PRO",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
               const SizedBox(height: 20),
 
-              const Text(
-                "Profile Name",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
+              // ================= PROFILE STREAM =================
+              StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                stream: getUserStream(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator(color: Colors.green);
+                  }
+
+                  if (!snapshot.hasData || snapshot.data?.data() == null) {
+                    return const CircleAvatar(radius: 55);
+                  }
+
+                  final data = snapshot.data!.data()!;
+
+                  final imageUrl = (data['imageUrl'] ?? '').toString();
+                  final name = (data['name'] ?? 'No Name').toString();
+                  final email = (data['email'] ?? '').toString();
+                  final phone = (data['phone'] ?? '').toString();
+
+                  return Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 55,
+                        backgroundImage: imageUrl.isNotEmpty
+                            ? NetworkImage(imageUrl)
+                            : null,
+                        child: imageUrl.isEmpty
+                            ? const Icon(Icons.person, size: 50)
+                            : null,
+                      ),
+
+                      const SizedBox(height: 15),
+
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Text(
+                          "PRO",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      Text(
+                        name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      Text(email, style: const TextStyle(color: Colors.grey)),
+
+                      const SizedBox(height: 5),
+
+                      Text(phone, style: const TextStyle(color: Colors.grey)),
+                    ],
+                  );
+                },
               ),
-
-              const SizedBox(height: 8),
-
-              const Text(
-                "example54321@gmail.com",
-                style: TextStyle(color: Colors.grey),
-              ),
-
-              const SizedBox(height: 5),
-
-              const Text("+923279563829", style: TextStyle(color: Colors.grey)),
 
               const SizedBox(height: 25),
 
+              // ================= EDIT BUTTON =================
               SizedBox(
                 width: double.infinity,
                 height: 55,
@@ -124,6 +158,7 @@ class ProfileScreen extends StatelessWidget {
 
               const SizedBox(height: 35),
 
+              // ================= BIKE SECTION =================
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -182,7 +217,7 @@ class ProfileScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                bike["name"],
+                                bike["name"] ?? "",
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -202,13 +237,13 @@ class ProfileScreen extends StatelessWidget {
                                     color: Colors.grey,
                                   ),
                                   Text(
-                                    bike["battery"],
+                                    bike["battery"] ?? "",
                                     style: const TextStyle(color: Colors.grey),
                                   ),
                                   const SizedBox(width: 15),
                                   const Icon(Icons.wifi, color: Colors.grey),
                                   Text(
-                                    bike["signal"],
+                                    bike["signal"] ?? "",
                                     style: const TextStyle(color: Colors.grey),
                                   ),
                                 ],
@@ -226,7 +261,7 @@ class ProfileScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            bike["status"],
+                            bike["status"] ?? "",
                             style: TextStyle(
                               color: bike["status"] == "LIVE"
                                   ? Colors.blue
@@ -243,6 +278,7 @@ class ProfileScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
+              // ================= MENU =================
               buildMenuTile(
                 Icons.settings,
                 "App Preferences",
@@ -255,6 +291,7 @@ class ProfileScreen extends StatelessWidget {
                   );
                 },
               ),
+
               buildMenuTile(
                 Icons.help_outline,
                 "Help & Support",
@@ -267,6 +304,7 @@ class ProfileScreen extends StatelessWidget {
                   );
                 },
               ),
+
               buildMenuTile(
                 Icons.subscriptions,
                 "Subscriptions",

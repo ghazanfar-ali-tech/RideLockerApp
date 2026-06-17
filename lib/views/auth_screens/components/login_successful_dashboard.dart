@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ride_locker_app/comonents/round_button.dart';
+import 'package:ride_locker_app/components/round_button.dart';
 import 'package:ride_locker_app/core/app_colors.dart';
 import 'package:ride_locker_app/views/home_screen.dart';
 
