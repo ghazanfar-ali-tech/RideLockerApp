@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_locker_app/constants.dart';
+import 'package:ride_locker_app/components/constants.dart';
 
 import 'package:ride_locker_app/providers/auth_providers/login_provider.dart';
 import 'package:ride_locker_app/providers/auth_providers/signup_provider.dart';
 import 'package:ride_locker_app/providers/on_boarding_provider.dart';
-
+import 'package:ride_locker_app/providers/user_provider.dart';
 import 'package:ride_locker_app/views/on_borading_screens/on_boarding_screen.dart';
 import 'package:ride_locker_app/views/profile_screen.dart';
 import 'package:ride_locker_app/views/splash_screen/splash_screen.dart';
@@ -39,6 +39,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => SignupProvider()),
         ChangeNotifierProvider(create: (_) => LoginProvider()),
         ChangeNotifierProvider(create: (_) => OnboardingProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: const MyApp(),
     ),

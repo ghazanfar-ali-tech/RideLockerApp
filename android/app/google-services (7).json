@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "836261461801",
+    "project_id": "riderlocker-ba777",
+    "storage_bucket": "riderlocker-ba777.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836261461801:android:6d61c8a5c88a7d1164c138",
+        "android_client_info": {
+          "package_name": "com.example.ride_locker_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArKf6Vdh8h2aMUVuB1VFzzKtLHINPZNo0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

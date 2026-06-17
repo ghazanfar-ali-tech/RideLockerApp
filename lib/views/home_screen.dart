@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ride_locker_app/views/profile_screen.dart';
 import '../providers/home_provider.dart';
 import '../widgets/stat_card.dart';
 import '../widgets/action_box.dart';
@@ -82,7 +83,10 @@ class HomeScreen extends StatelessWidget {
                     label: 'Profile',
                     icon: Icons.person,
                     active: selectedIndex == 3,
-                    onTap: () => homeProvider.setSelectedIndex(3),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileScreen()),
+                    ),
                   ),
                 ],
               ),

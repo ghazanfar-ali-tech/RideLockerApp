@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ride_locker_app/comonents/custom_text_field.dart';
 import 'package:ride_locker_app/comonents/round_button.dart';
+
 import 'package:ride_locker_app/providers/auth_providers/signup_provider.dart';
 import 'package:ride_locker_app/views/auth_screens/components/form_heading_text.dart';
 import 'package:ride_locker_app/views/auth_screens/components/form_subheading_text.dart';

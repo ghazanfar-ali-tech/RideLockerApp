@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:ride_locker_app/services/cloudinary_services.dart';
+import 'dart:typed_data';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -8,15 +13,72 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final TextEditingController nameController =
-      TextEditingController(text: "aiman");
+  Uint8List? imageBytes;
+  String? uploadedImageUrl;
 
-  final TextEditingController phoneController =
-      TextEditingController(text: "12345678900");
+  final TextEditingController nameController = TextEditingController(
+    text: "aiman",
+  );
+  final TextEditingController phoneController = TextEditingController(
+    text: "12345678900",
+  );
+  final TextEditingController emailController = TextEditingController(
+    text: "abc@gmail.com",
+  );
 
-  final TextEditingController emailController =
-      TextEditingController(text: "abc@gmail.com");
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
 
+  // ================= PICK IMAGE =================
+  Future<void> pickImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      withData: true,
+    );
+
+    if (result != null && result.files.first.bytes != null) {
+      final bytes = result.files.first.bytes!;
+
+      setState(() {
+        imageBytes = bytes;
+      });
+
+      // Upload to Cloudinary
+      String? imageUrl = await CloudinaryService.uploadImage(bytes);
+
+      if (imageUrl != null) {
+        uploadedImageUrl = imageUrl;
+
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Image Uploaded")));
+      }
+    }
+  }
+
+  // ================= LOAD DATA =================
+  void loadUserData() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .get();
+
+    final data = doc.data();
+
+    if (data != null) {
+      nameController.text = data['name'] ?? '';
+      phoneController.text = data['phone'] ?? '';
+      emailController.text = data['email'] ?? '';
+      uploadedImageUrl = data['imageUrl'];
+    }
+  }
+
+  // ================= UI =================
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,57 +88,61 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         elevation: 0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
         ),
         title: const Text(
           "Edit Profile",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
 
-            // Profile Image
+            // ================= PROFILE IMAGE =================
             Center(
               child: Stack(
-                clipBehavior: Clip.none,
                 children: [
                   Container(
-                    width: 180,
-                    height: 180,
-                    decoration: const BoxDecoration(
-                      color: Color(0xffD9D9D9),
+                    width: 160,
+                    height: 160,
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
+                      color: const Color(0xffD9D9D9),
+                      image: imageBytes != null
+                          ? DecorationImage(
+                              image: MemoryImage(imageBytes!),
+                              fit: BoxFit.cover,
+                            )
+                          : uploadedImageUrl != null
+                          ? DecorationImage(
+                              image: NetworkImage(uploadedImageUrl!),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
                     ),
+                    child: (imageBytes == null && uploadedImageUrl == null)
+                        ? const Icon(Icons.person, size: 80, color: Colors.grey)
+                        : null,
                   ),
+
                   Positioned(
-                    bottom: 8,
-                    right: 10,
-                    child: Container(
-                      height: 45,
-                      width: 45,
-                      decoration: const BoxDecoration(
-                        color: Color(0xff39E58C),
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          // Pick Image
-                        },
-                        icon: const Icon(
-                          Icons.camera_alt_outlined,
+                    bottom: 5,
+                    right: 5,
+                    child: GestureDetector(
+                      onTap: pickImage,
+                      child: Container(
+                        height: 45,
+                        width: 45,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xff39E58C),
+                        ),
+                        child: const Icon(
+                          Icons.camera_alt,
                           color: Colors.white,
-                          size: 20,
                         ),
                       ),
                     ),
@@ -85,98 +151,71 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
 
-            const SizedBox(height: 35),
+            const SizedBox(height: 30),
 
-            const Text(
-              "Full Name",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
+            // ================= FIELDS =================
             customTextField(
               controller: nameController,
-              hintText: "aiman",
-              icon: Icons.person_outline,
+              hintText: "Full Name",
+              icon: Icons.person,
             ),
 
-            const SizedBox(height: 25),
-
-            const Text(
-              "Phone",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-
-            const SizedBox(height: 12),
+            const SizedBox(height: 15),
 
             customTextField(
               controller: phoneController,
-              hintText: "12345678900",
-              icon: Icons.phone_outlined,
+              hintText: "Phone",
+              icon: Icons.phone,
               keyboardType: TextInputType.phone,
             ),
 
-            const SizedBox(height: 25),
-
-            const Text(
-              "Email/Phone",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-
-            const SizedBox(height: 12),
+            const SizedBox(height: 15),
 
             customTextField(
               controller: emailController,
-              hintText: "abc@gmail.com",
-              icon: Icons.email_outlined,
+              hintText: "Email",
+              icon: Icons.email,
             ),
 
             const SizedBox(height: 40),
 
-            // Save Button
+            // ================= SAVE BUTTON =================
             SizedBox(
               width: double.infinity,
-              height: 58,
+              height: 55,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xff39E58C),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
-                  ),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  final uid = FirebaseAuth.instance.currentUser!.uid;
+
+                  await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(uid)
+                      .set({
+                        'name': nameController.text.trim(),
+                        'phone': phoneController.text.trim(),
+                        'email': emailController.text.trim(),
+                        'imageUrl': uploadedImageUrl,
+                      }, SetOptions(merge: true));
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Profile Updated")),
+                  );
+
                   Navigator.pop(context);
                 },
-                child: const Text(
-                  "Save",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: const Text("Save", style: TextStyle(fontSize: 18)),
               ),
             ),
-
-            const SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
 
+  // ================= TEXT FIELD WIDGET =================
   Widget customTextField({
     required TextEditingController controller,
     required String hintText,
@@ -188,13 +227,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       keyboardType: keyboardType,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        filled: true,
-        fillColor: const Color(0xff1E1E1E),
         prefixIcon: Icon(icon, color: Colors.grey),
         hintText: hintText,
         hintStyle: const TextStyle(color: Colors.grey),
+        filled: true,
+        fillColor: const Color(0xff1E1E1E),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide.none,
         ),
       ),
