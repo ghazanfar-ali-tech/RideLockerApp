@@ -36,6 +36,16 @@ class NavItem extends StatelessWidget {
                 fontWeight: active ? FontWeight.w600 : FontWeight.normal,
               ),
             ),
+            const SizedBox(height: 3),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: active ? 18 : 0,
+              height: 2,
+              decoration: BoxDecoration(
+                color: const Color(0xFF00E676),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
           ],
         ),
       ),
