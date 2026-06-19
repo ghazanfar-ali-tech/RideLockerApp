@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   NavItem(
                     label: 'Home',
-                    icon: Icons.home,
+                    icon: Icons.home_rounded,
                     active: selectedIndex == 0,
                     onTap: () => homeProvider.setSelectedIndex(0),
                   ),
@@ -71,12 +71,17 @@ class HomeScreen extends StatelessWidget {
                     label: 'Track',
                     icon: Icons.location_on,
                     active: selectedIndex == 1,
-                    onTap: () => homeProvider.setSelectedIndex(1),
+                    onTap: () {
+                      homeProvider.setSelectedIndex(1);
+                      Navigator.pushNamed(context, AppRoutes.track).then((_) {
+                        homeProvider.resetToHome();
+                      });
+                    },
                   ),
                   SizedBox(width: size.width * 0.13),
                   NavItem(
                     label: 'Alert',
-                    icon: Icons.notifications,
+                    icon: Icons.notifications_outlined,
                     active: selectedIndex == 2,
                     onTap: () {
                       homeProvider.setSelectedIndex(2);
@@ -87,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   NavItem(
                     label: 'Profile',
-                    icon: Icons.person,
+                    icon: Icons.person_outline,
                     active: selectedIndex == 3,
 
                     onTap: () {
@@ -252,12 +257,14 @@ class HomeScreen extends StatelessWidget {
         const SizedBox(height: 8),
         const AlertRow(
           color: Colors.redAccent,
+          icon: Icons.notifications_active,
           text: 'Motion detected near bike',
           time: '2m ago',
         ),
         const SizedBox(height: 8),
         const AlertRow(
           color: Colors.orangeAccent,
+          icon: Icons.fence,
           text: 'Left Geo-fence boundary',
           time: '1h ago',
         ),

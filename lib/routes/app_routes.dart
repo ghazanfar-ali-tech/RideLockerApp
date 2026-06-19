@@ -9,6 +9,7 @@ import 'package:ride_locker_app/views/auth_screens/signup_screen.dart';
 import 'package:ride_locker_app/views/edit_profile_screen.dart';
 import 'package:ride_locker_app/views/helpsupport_screen.dart';
 import 'package:ride_locker_app/views/home_screen.dart';
+import 'package:ride_locker_app/views/track_screen.dart';
 import 'package:ride_locker_app/views/on_borading_screens/on_boarding_screen.dart';
 import 'package:ride_locker_app/views/profile_screen.dart';
 import 'package:ride_locker_app/views/splash_screen/splash_screen.dart';
@@ -22,6 +23,7 @@ class AppRoutes {
   static const String signup = '/signup';
   static const String forgotPassword = '/forgot-password';
   static const String home = '/home';
+  static const String track = '/track';
   static const String profile = '/profile';
   static const String editProfile = '/edit-profile';
   static const String alerts = '/alerts';
@@ -50,6 +52,9 @@ class AppRoutes {
 
       case home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+
+      case track:
+        return MaterialPageRoute(builder: (_) => const TrackScreen());
 
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
